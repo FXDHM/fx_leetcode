@@ -1,0 +1,23 @@
+这个题是找到在1到数组长度范围内，数组中没有出现的数字，以数组的形式输出
+思路：
+用map，没有出现的是0，出现了的不是0.
+结果运行出来奇慢
+Runtime：439ms
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        vector<int> ans;
+        map<int,int> m;
+        for(int i = 1;i <= nums.size();i++){
+            m[i] = 0;
+        }
+        for(int i = 0;i < nums.size();i++){
+            m[nums[i]]++;
+        }
+        for(int i = 1;i <= nums.size();i++){
+            if(m[i] == 0)
+                ans.push_back(i);
+        }
+        return ans;
+    }
+};
