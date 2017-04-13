@@ -21,3 +21,22 @@ public:
         return ans;
     }
 };
+
+找了discuss中的vote max，具体的思路是遍历数组中的数，把数对应位置的值变为负数，则到最后数组中不为负数的所在下标+1即为在数组中没有出现过的值
+一开始不理解为啥要用到abs，后来相通了，是因为生成负数，如果负数-1，则超出下标范围。
+Runtime：173ms
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums){
+        int　len = nums.size();
+        for(int i = 0;i < len;i++){
+            int m = abs(nums[i]) - 1;
+            nums[m] = nums[m] > 0? -nums[m]:nums[m];
+        }
+        vector<int> res;
+        for(int i = 0;i < len;i++){
+            if(nums[i] > 0) res.push_back(nums[i+1]);
+        }
+        return res;
+    }
+}；
