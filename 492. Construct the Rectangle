@@ -1,0 +1,35 @@
+这个题就是找一个数的分解因数（可能不准确，因为有1的情况），找出第一个数比第二个数大的第一个数组即可
+Runtime：96ms
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        vector<int> res;
+        int l,w;
+        for(int i = 1;i <= area;i++){
+            int a = area % i;
+            if(a == 0 && (area/i <= i)){
+                l = i;
+                w = area/i;
+                res.push_back(l);
+                res.push_back(w);
+                break;
+            }
+        }
+
+        return res;
+    }
+};
+
+先把范围缩小，脑子真的和一个智障一样
+Runtime：0ms
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        int a = (int)sqrt(area);
+        int w = area;
+        for(int i=1;i<=a;i++){
+            if(area % i == 0) w = i;
+        }
+        return vector<int> {area / w,w};
+    }
+};
