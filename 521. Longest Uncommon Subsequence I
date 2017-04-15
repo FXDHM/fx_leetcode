@@ -1,0 +1,34 @@
+这道题是找非字串的最大长度，思路还是硬来，从第一个字符开始，遍历所有字串，记下最长字符串长度，反正用的还是最笨的方法
+Runtime：9ms
+class Solution {
+public:
+    int findLUSlength(string a, string b) {
+        if(a.length() > b.length()) return a.length();
+        if(a.length() < b.length()) return b.length();
+        int ans = 0;
+        int t = 0;
+        for(int i = 0;i < a.length();i++){
+            for(int j = 1;j <= a.length();j++){
+                string s = a.substr(i,j);
+                if(b.find(s) > b.length()) t = j;
+                if(t > ans) ans = t;
+            }
+        }
+        if(ans == 0) return -1;
+        else return ans;
+    }
+};
+
+还是加油吧，思路还是不到。分了三种情况，如果长度不一样，就是长的，如果一样，两个字符串相同则放回-1，如果不相同则就返回字符串长度即可。
+Runtime：3ms
+class Solution {
+public:
+    int findLUSlength(string a, string b) {
+        if(a.length() != b.length())
+        {
+            return max(a.length() , b.length());
+        }
+        if(a == b) return -1;
+        return a.length();
+    }
+};
