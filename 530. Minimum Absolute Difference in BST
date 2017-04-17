@@ -1,0 +1,37 @@
+一开始没有理解题意，以为只要层次遍历即可，先上一个层次遍历算法
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int getMinimumDifference(TreeNode* root) {
+        queue<TreeNode *> q;
+        int m;
+        TreeNode *t;
+        t = root;
+        q.push(t);
+        if(t->left) m = abs(t->val - t->left->val);
+        if(t->right) m = abs(t->val - t->right->val);
+        TreeNode *p;
+        while(!q.empty()){
+            p = q.front();
+            q.pop();
+            if(p->left){
+                if(abs(p->val - p->left->val) < m) m = abs(p->val - p->left->val);
+                q.push(p->left);
+            }
+            if(p->right){
+                if(abs(p->val - p->right->val) < m) m = abs(p->val - p->right->val);
+                q.push(p->right);
+            }
+        }
+        return m;
+    }
+};
+
