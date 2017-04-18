@@ -35,3 +35,45 @@ public:
     }
 };
 
+在层次遍历的基础上，把树中的所有制放入一个vector中，对vector进行排序，两两相减得出最小值。
+Runtime：32ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int getMinimumDifference(TreeNode* root) {
+        vector<int> res;
+        queue<TreeNode *> q;
+        TreeNode *t;
+        t = root;
+        q.push(t);
+        TreeNode *p;
+        res.push_back(t->val);
+        while(!q.empty()){
+            p = q.front();
+            q.pop();
+            if(p->left){
+                res.push_back(p->left->val);
+                q.push(p->left);
+            }
+            if(p->right){
+                res.push_back(p->right->val);
+                q.push(p->right);
+            }
+        }
+        sort(res.begin(),res.end());
+        int m;
+        m = res[1] - res[0];
+        for(int i = 1;i < res.size()-1;i++){
+            if((res[i+1] - res[i]) < m) m = res[i+1] - res[i];
+        }
+        return m;
+    }
+};
