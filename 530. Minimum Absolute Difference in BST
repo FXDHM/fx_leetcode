@@ -77,3 +77,29 @@ public:
         return m;
     }
 };
+
+在二叉搜索树中，其中序遍历了就是一个递增的数组
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int m = INT_MAX;
+    int pre = -1;
+    int getMinimumDifference(TreeNode* root) {
+        if(root == NULL) return m;
+        getMinimumDifference(root->left);
+        
+        if(pre != -1){
+            return min(m,root->val - pre);
+         pre = root->val;
+         
+         getMinimumDifference(root->right);
+    }
+};
