@@ -1,0 +1,25 @@
+没啥好说的 还是暴力法。这里要了解int转化成string的方法
+Runtime：19ms
+class Solution {
+public:
+    vector<string> findRelativeRanks(vector<int>& nums) {
+        vector<string> res;
+        vector<int> n;
+        for(int i = 0;i < nums.size();i++){
+            n.push_back(nums[i]);
+        }
+        map<int,string> m;
+        sort(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.end());
+        m[nums[0]] = "Gold Medal";
+        m[nums[1]] = "Silver Medal";
+        m[nums[2]] = "Bronze Medal";
+        for(int i = 3;i < nums.size();i++){
+            m[nums[i]] = to_string(i+1);
+        }
+        for(int i = 0;i < nums.size();i++){
+            res.push_back(m[n[i]]);
+        }
+        return res;
+    }
+};
