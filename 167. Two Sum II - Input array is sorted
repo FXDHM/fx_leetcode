@@ -1,0 +1,38 @@
+给定一个整数，在有序数组中找到两个和为这个整数的，返回这两个数的index
+思路：因为是有序数组，可以分别从头从尾遍历，当两个数和大于目标数，则尾部下标减一，当小于目标数，则头部加一
+Runtime：6ms
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int l = 0;
+        int h = numbers.size() - 1;
+        vector<int> res;
+        while(numbers[l] + numbers[h] != target){
+            if(numbers[l] + numbers[h] > target)
+                h--;
+            else
+                l++;
+        }
+        res.push_back(l+1);
+        res.push_back(h+1);
+        return res;
+    }
+};
+
+有一个Runtime：3ms的，思路都一样，不知道为啥运行的快
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        
+        int i=0,j=numbers.size()-1;
+        int sum=numbers[i]+numbers[j];
+        while(sum!=target){
+            if(sum<target)
+                sum=numbers[++i]+numbers[j];
+            else 
+              sum=numbers[i]+numbers[--j];
+        }
+        return vector<int>{i+1,j+1};
+        
+    }
+};
