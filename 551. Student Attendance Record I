@@ -1,0 +1,14 @@
+这道题是对于字符串的操作，没啥说的。注意不能这么写： 0 <= a < s.length()。而要a >= 0 && a < s.length()
+Runtime：3ms
+class Solution {
+public:
+    bool checkRecord(string s) {
+        int c = 0;
+        for(int i = 0;i < s.length();i++){
+            if(s[i] == 'A') c++;
+        }
+        if(c > 1) return false;
+        else if(s.find("LLL") < s.length() && s.find("LLL") >= 0) return false;
+        return true;
+    }
+};
