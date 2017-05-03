@@ -10,5 +10,5 @@ public:
         if(c > 1) return false;
         else if(s.find("LLL") < s.length() && s.find("LLL") >= 0) return false;
         return true;
-    }
+     }
 };
