@@ -1,0 +1,34 @@
+找到包含（0，1，2，3..n）的数组中少了哪一个数
+思路：0...n求和再减去数组求和的值
+Runtime：23ms
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int a = 0;
+        int b = 0;
+        int ans = 0;
+        for(int i=0;i <= nums.size();i++){
+            a += i;
+            if(i < nums.size()){
+                b += nums[i];
+            }
+        }
+        return a-b;
+    }
+};
+
+看到了一个神算法，思路是：运用异或，a^b^a = b。则最后的结果肯定为缺少的值
+Runtime ：29ms
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int result = nums.size();
+        int i = 0;
+        for(int num : nums){
+            result ^= num;
+            result ^= i;
+            i++;
+        }
+        return result;
+    }
+};
