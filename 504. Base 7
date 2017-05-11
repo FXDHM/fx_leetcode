@@ -1,0 +1,19 @@
+本题求10进制对应的7进制，转化成string。本题注意int转string方法：to_string.string转int的方法：https://zhidao.baidu.com/question/555168302.html
+Runtime：6ms
+class Solution {
+public:
+    string convertToBase7(int num) {
+        if(num == 0) return "0";
+        string s = "";
+        int n = abs(num);
+        while(n){
+            int c = n % 7;
+            string s1 = to_string(c);
+            s = s + s1;
+            n = n / 7;
+        }
+        reverse(s.begin(),s.end());
+        if(num < 0) s = "-" + s;
+        return s;
+    }
+};
