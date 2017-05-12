@@ -97,9 +97,10 @@ public:
         getMinimumDifference(root->left);
         
         if(pre != -1){
-            return min(m,root->val - pre);
-         pre = root->val;
-         
-         getMinimumDifference(root->right);
+            m = min(m,root->val - pre);
+        }
+        pre = root->val; 
+        getMinimumDifference(root->right);
+        return m;
     }
 };
