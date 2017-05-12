@@ -1,0 +1,66 @@
+求一个二叉树中任意两个顶点间的最大距离，这里用中序递归.这种方式对树进行了两次遍历，比较费时
+Runtime:19ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int deep(TreeNode* root){
+        if(root == NULL) return 0;
+        int lefth = deep(root->left);
+        int righth = deep(root->right);
+        return lefth > righth? lefth+1:righth+1;
+    }
+    int m = 0;
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(root == NULL) return m;
+        
+        diameterOfBinaryTree(root->left);
+        
+        int l = deep(root->left);
+        int r = deep(root->right);
+        m = max(m, l+r);
+        
+        diameterOfBinaryTree(root->right);
+        return m;        
+    }
+};
+
+给出第二种方法，在求树高的同时记录最大距离
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int maxdiadepth = 0;
+    
+    int dfs(TreeNode* root){        
+        if(root == NULL) return 0;
+        
+        int leftdepth = dfs(root->left);
+        int rightdepth = dfs(root->right);
+        
+        if(leftdepth + rightdepth > maxdiadepth) maxdiadepth = leftdepth + rightdepth;
+        return max(leftdepth +1, rightdepth + 1);     
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {        
+        dfs(root);
+        
+        return maxdiadepth;
+    }
+};
+
