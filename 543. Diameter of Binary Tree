@@ -33,7 +33,7 @@ public:
 };
 
 给出第二种方法，在求树高的同时记录最大距离
-
+Runtime：9ms
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
