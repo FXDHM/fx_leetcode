@@ -1,0 +1,22 @@
+找到插入位置，返回的位置是插入到数组后所在的位置，注意插入相同的元素返回之前元素在数组中的位置。方法用二分法遍历数组，时间复杂度O（log2n）
+Runtime：6ms
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int h = nums.size()-1;
+        int l = 0;
+        int m = (l+h)/2;
+        while(l <= h){
+            if(nums[m] == target) return m;
+            if(nums[m] < target){
+                l = m+1;
+                m = (l+h)/2;
+            }
+            else{
+                h = m-1;
+                m = (l+h)/2;
+            }
+        }
+        return l;
+    }
+};
