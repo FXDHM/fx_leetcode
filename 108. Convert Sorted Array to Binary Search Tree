@@ -1,0 +1,30 @@
+把一个顺序数组转化成为一个平衡二叉搜索树，递归的做法，把数组按照二分法分开递归。这里面注意的是树节点的建立 new TreeNode(nums[i])
+Runtime：23ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        if(nums.size() == 0) return NULL;
+        
+        int h = nums.size()-1;
+        int l = 0;
+        int m = (h + l) / 2;
+        TreeNode* root = new TreeNode(nums[m]);
+        
+        vector<int> leftnum(nums.begin(),nums.begin()+m);
+        vector<int> rightnum(nums.begin()+m+1,nums.end());
+        
+        root->left = sortedArrayToBST(leftnum);
+        root->right = sortedArrayToBST(rightnum);
+        
+        return root;
+    }
+};
