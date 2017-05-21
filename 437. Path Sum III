@@ -1,0 +1,24 @@
+求树中的子路径和等于给定数的个数。
+思路：深度优先遍历所有的子路径，找到等于给定数的个数
+Runtime：22ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int sumPath(TreeNode* root, int pre, int sum){
+        if (root == NULL) return 0;
+        int s = pre + root->val;
+        return (s == sum) + sumPath(root->left, s, sum) + sumPath(root->right, s, sum);
+    }
+    int pathSum(TreeNode* root, int sum) {
+        if(root == NULL) return 0;
+        return sumPath(root, 0, sum) + pathSum(root->left, sum) + pathSum(root->right, sum);
+    }
+};
