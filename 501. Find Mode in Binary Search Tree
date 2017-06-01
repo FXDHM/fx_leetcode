@@ -1,0 +1,78 @@
+找出二叉搜索树中重复最多的元素。中序遍历，之后对元素值进行处理
+Runutime：13ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+        
+        inorder(root);
+        return res;
+    }
+private:
+    int currnode = 0;
+    int count = 1;
+    int maxi = 1;
+    vector<int> res;
+    
+    void handlevalue(int val){
+        if(val == currnode){
+            count++;
+        }
+        else{
+            currnode = val;
+            if(count > maxi) maxi = count;
+            count = 1;
+        }
+        if(count > maxi){
+            res.clear();
+            res.push_back(val);
+            //return res;
+        }
+        else if(count == maxi){
+            res.push_back(val);
+        }
+    }
+    
+    void inorder(TreeNode *root){
+        if(root == NULL) return;
+        inorder(root->left);
+        
+        handlevalue(root->val);
+        
+        inorder(root->right);
+        
+    }
+};
+
+第二种方法使用 Morris Traversal,在第一种方法的基础上把遍历方法改变
+    void Morris(TreeNode *root){
+        if(root == NULL) return;
+        TreeNode *p = root, *pre;
+        while(p != NULL){
+            if(p -> left == NULL){
+                handlevalue(p -> val);
+            }
+            else{
+                pre = p->left
+                while(pre -> right && pre -> right != p){
+                    pre = pre -> right;
+                }
+                if(pre -> right == NULL){
+                    pre -> right = p;
+                    p = p -> left;
+                }
+                else{
+                    pre -> right = NULL;
+                    handlevalue(p -> val);
+                    p = p -> right;
+                }
+            }
+        }
