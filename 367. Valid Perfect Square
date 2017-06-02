@@ -1,0 +1,24 @@
+判断一个数是否是平方数。
+第一种，二分法
+Runtime：3ms
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        long l = 1, h = num;
+        long m = l + (h - l)/2;
+        while(l <= h){
+            if(m * m == num) return true;
+            else if(m * m > num) h = m - 1;
+            else l = m + 1;
+            m = l + (h - l)/2;
+        }
+        return false;
+    }
+};
+
+第二种用到了Integer Newton的方法，即不断迭代找到平方根最接近目标数的那个值。
+Runtime：3ms
+    long r = x;
+    while (r*r > x)
+        r = (r + x/r) / 2;
+    return r*r == x;
