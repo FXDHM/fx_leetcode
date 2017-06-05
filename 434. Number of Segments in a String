@@ -1,0 +1,29 @@
+判断字符串中有几个由非空字符串构成的子段
+自己的想法很蠢不想再说，学到的方法，第一种，首先往字符串中加入一个“ ”。之后比较第i个和第i-1个的值。可能用到了push_back所以很慢。
+Runtime：6ms
+class Solution {
+public:
+    int countSegments(string s) {
+        s.push_back(' ');
+        int count = 0;
+        for(int i = 1; i < s.size(); ++i){
+            if(s[i] == ' ' && s[i-1] != ' ') count++;
+        }
+        return count;
+    }
+};
+
+第二种方法，思路差不多，在最后对最后一个字符进行判断
+Runtime：0ms
+class Solution {
+public:
+    int countSegments(string s) {
+        int count = 0;
+        int i = 0;
+        for(;i != s.size(); i++){
+            if(i > 0 && s[i] == ' ' && s[i-1] != ' ')
+                count++;
+        }
+        return count + (i > 0 && s[i-1] != ' ');
+    }
+};
