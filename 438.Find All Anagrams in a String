@@ -1,0 +1,28 @@
+给定两个字符串p,s.字s中找到所有得与p同字符但可能异序得字串的第一位下标。
+自己想的方法超时，参考别人一种滑动窗口方法。使用两个vector，分别将前p.size（）位以s[i]-'a'的形式存入vector中，判断pv与sv是否相同。之后向后“滑动”一位
+不断比较，直到最后一位
+Runtime：33ms
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> sv(26, 0), pv(26, 0), res;
+        
+        if(s.size() < p.size()) return res;
+        
+        for(decltype(p.size()) i = 0; i < p.size(); i++){
+            ++sv[s[i] - 'a'];
+            ++pv[p[i] - 'a'];
+        }
+        
+        if(sv == pv) res.push_back(0);
+        
+        for(decltype(p.size()) i = p.size(); i != s.size(); i++){
+            ++sv[s[i] - 'a'];
+            
+            --sv[s[i - p.size()] - 'a'];
+            
+            if(sv == pv) res.push_back(i - p.size() + 1);
+        }
+        return res;
+    }
+};
