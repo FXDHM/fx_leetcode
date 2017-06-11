@@ -1,0 +1,35 @@
+找到第i个整数，这个题是找规律的题。
+思路如下：
+1）首先确定目标整数属于的整数有几位，我们可以发现每个位数包含的整数个数是有规律的：1 * 9， 2 * 90， 3 * 900...。所以我们可以通过循环目标数来找到
+其所属的位数
+2）找到所属的位数后，确定其是所属位数的第几个数。
+3）确定所属数后，判断是这个数的第几位
+
+Runtime：3ms
+class Solution {
+public:
+    int findNthDigit(int n) {
+        long a = n;
+        long i = 1;
+        while(a > 0){
+            
+            a -= i * (9 * pow(10, i-1));
+            i++;
+        }
+        
+        long sum;
+        sum = a + (i-1)*(9 * pow(10,i-2));
+        
+        long m = (sum-1) / (i - 1);
+        long k = (sum-1) % (i - 1);
+        long j;
+        j = pow(10,i-2) + m;
+        string s = to_string(j);
+        char c;
+        c = s[k];
+
+        return c - '0';
+    }
+};
+
+这里有一点要注意，之前一直用的10^i，但是发现10^0 == 10； 
