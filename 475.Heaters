@@ -1,0 +1,21 @@
+本题的大意是给定两个数组，第一个代表房间的位置，第二个代表暖气的位置。返回暖气覆盖区域的最小半径
+自己愚，没有想出来，参考solution。大致思路：设置一个表示最大半径的值maxi=0，首先将两个数组进行排序。排序后对表示房间位置的数组进行循环遍历，找到暖气
+能够覆盖该房间的最小半径，将该半径与maxi进行对比，找到最大值。遍历完即可得到可覆盖所有房间的最小半径。
+Runtime：86ms
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        if(houses.size() == 0) return 0;
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+        int maxi = 0;
+        int index = 0;
+        for(int i = 0; i < houses.size(); i++){
+            while(index + 1 < heaters.size() && (abs(heaters[index+1] - houses[i]) <= abs(heaters[index] - houses[i]))){
+                index++;
+            }
+            maxi = max(abs(heaters[index] - houses[i]), maxi);
+        }
+        return maxi;
+    }
+};
