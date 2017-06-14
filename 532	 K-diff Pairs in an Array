@@ -1,0 +1,39 @@
+给定一个数组nums和一个整数n，找到数组中两元素之差等于给定整数的组合个数。规定（3，1）和（1， 3）算一种。
+思路：给定两个值p=0，q=1.判断nums[p]和nums[q]的差：
+      （1）如果等于n，则结果++，p和q分别自增，自增到p对应的值不等于p-1对应的值，q同理。最后判断p和q是否为同一个值，若是则q++；
+      （2）如果小于n，则q++
+      （3）如果大于n，则p++，如果p等于q，则q++
+      最后返回结果
+Runtime：39
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int p = 0, q = 1;
+        int a = 0;
+        while(p < nums.size() && q < nums.size())
+        {
+            if(nums[q] - nums[p] == k){
+                a++;
+                q++;
+                p++;
+                while(nums[q] == nums[q-1] && q < nums.size()){
+                    q++;
+                }
+                while(nums[p] == nums[p-1] && p < nums.size()){
+                    p++;
+                }
+                if(p == q) q++;
+            }
+            else if(nums[q] - nums[p] > k){
+                p++;
+                if(p == q) q++;
+            }
+            else if(nums[q] - nums[p] < k){
+                q++;
+            }
+            
+        }
+        return a;
+    }
+};
