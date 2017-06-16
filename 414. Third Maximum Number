@@ -1,0 +1,16 @@
+找到一个数组中第三大的数
+使用set，一开始不知道set直接就是排序好的 绕了很大弯路
+Runtime：9ms
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        set<int> set1;
+        for(int i : nums){
+            set1.insert(i);
+            if(set1.size() > 3){
+                set1.erase(set1.begin());
+            }
+        }
+        return set1.size() == 3 ? *set1.begin() : *set1.rbegin();
+    }
+};
