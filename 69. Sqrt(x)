@@ -1,0 +1,13 @@
+求一个数的平方根
+使用牛顿数循环r = (r + x/r) / 2，直到r * r <= x
+Runtime：6ms
+class Solution {
+public:
+    int mySqrt(int x) {
+        long r = x;
+        while(r * r > x){
+            r = (r + x/r) / 2;
+        }
+        return r;
+    }
+};
