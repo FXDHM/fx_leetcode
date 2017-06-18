@@ -1,0 +1,51 @@
+字符串的复数运算
+没啥好说的，新看到了pair的用法，感觉挺好用的
+Runtime：3ms
+class Solution {
+public:
+    string complexNumberMultiply(string a, string b) {
+        int fa = a.find('+');
+        int fb = b.find('+');
+        
+        int ia = 0, ib = 0;
+        int c = 1;
+        for(int i = fa - 1; i >= 0; i--){
+            if(a[i] == '-') continue;
+            ia += (a[i] - '0') * c; 
+            c *= 10;
+        }
+        if(a[0] == '-')  ia = -ia;
+        
+        c = 1;
+        for(int i = fb - 1; i >= 0; i--){
+            if(b[i] == '-') continue;
+            ib += (b[i] - '0') * c;
+            c *= 10;
+        }
+        if(b[0] == '-') ib = -ib;
+        
+        int ca = 0, cb = 0;
+        c = 1;
+        for(int i = a.size() - 2; i >= fa + 1; i--){
+            if(a[i] == '-') continue;
+            ca += (a[i] - '0') * c;
+            c *= 10;
+        }
+        if(a[fa+1] == '-') ca = -ca;
+        
+        c = 1;
+        for(int i = b.size() - 2; i >= fb + 1; i--){
+            if(b[i] == '-') continue;
+            cb += (b[i] - '0') * c;
+            c *= 10;
+        }
+        if(b[fb+1] == '-') cb = -cb;
+        
+        int integ = ia * ib - ca * cb;
+        int cinteg = ia * cb + ib * ca;
+ 
+        string s = to_string(integ) + "+" + to_string(cinteg) + "i";
+    
+        return s;        
+    }
+};
