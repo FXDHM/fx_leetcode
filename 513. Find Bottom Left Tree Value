@@ -1,0 +1,58 @@
+找到树的最左边的叶子结点。
+愚
+思路1：按照广度优先的思想，首先遍历右孩子节点再遍历左孩子节点。牛逼算法
+Runtime：
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        queue <TreeNode* > q;
+        q.push(root);
+        while(!q.empty()){
+          root = q.front();
+          q.pop();
+          if(root->right) q.push(root->right);
+          if(root->left) q.push(root->left);
+        }
+        return root->val;
+    }
+};
+
+思路2：递归方法，遍历所有的节点，找到首先出现的最大深度的节点
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void findBottomLeftValue(TreeNode* root,TreeNode* p, int &Maxdeep, int h){
+        if(root == NULL) return;
+        
+        findBottomLeftValue(root->left, Maxdeep, h+1);
+        findBottomLeftValue(root->right, Maxdeep, h+1);
+        
+        if(h > Maxdeep){
+            Maxdeep = h;
+            p->val = root->val;
+        }
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        int maxdeep = 0;
+        TreeNode* p = root
+        findBottomLeftValue(root, p, maxdeep,0);
+        return p->val;
+    }
+};
