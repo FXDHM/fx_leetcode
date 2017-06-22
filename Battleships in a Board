@@ -1,0 +1,15 @@
+求一个矩阵中军舰的数量，要求两个军舰之间至少隔着一行或者一列
+愚，没有按照自己的想法来，参考别人的。
+思路：循环所有节点，找到本身是“x”，上面和左面都是“.”的个数
+Runtime：3ms
+public:
+    int countBattleships(vector<vector<char>>& board) {
+        int ans = 0;
+        for(int i = 0; i < board.size(); i++){
+            for(int j = 0; j < board[i].size(); j++){
+                ans += board[i][j] == 'X' && (i == 0 || board[i-1][j] == '.') && (j == 0 || board[i][j-1] == '.');
+            }
+        }
+        return ans;
+    }
+};
