@@ -1,0 +1,25 @@
+给一个数组，找到结果最大的除法表达式。
+思路：x1/x2/x3.../xn，该表达式可以化为x1/x2*Y。则要使表达式最大，则找到Y最大，而Y最大为x3*x4...*Xn
+Runtime：3ms
+class Solution {
+public:
+    string optimalDivision(vector<int>& nums) {
+        if(nums.size() == 1) return to_string(nums[0]);
+        string res;
+        res += to_string(nums[0]);
+        if(nums.size() == 2){
+            res += "/";
+            res += to_string(nums[1]);
+            return res;
+        }
+        res += "/";
+        res += "(";
+        for(int i = 1; i != nums.size(); i++){
+            res += to_string(nums[i]);
+            if(i != nums.size() - 1)
+                res += "/";
+        }
+        res += ")";
+        return res;
+    }
+};
