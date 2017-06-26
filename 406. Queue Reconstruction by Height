@@ -1,0 +1,19 @@
+给vector中的pair数组进行排序，pair中的第一个值表示身高，第二个值表示之前有几个人比他高或者与他一样高。
+思路：首先考虑最高的人，因为他所在的位置与比他低的人无关，所以对应pair的第二个值就是其在数组中的位置，接着找第二高的，pair的第二个值就是其在最高人已加入
+的数组的情况下现在的位置，按照pair的第二个值插入第二高的人，如此循环下去
+Runtime：36ms
+class Solution {
+public:
+    static bool compare(pair<int, int> r1, pair<int, int> r2){
+        if(r1.first == r2.first) return r1.second < r2.second;
+        else return (r1.first > r2.first);
+    }
+    vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
+        vector<pair<int, int>> res;
+        sort(people.begin(), people.end(), compare);
+        for(auto i : people){
+            res.insert(res.begin() + i.second, i);
+        }
+        return res;
+    }
+};
