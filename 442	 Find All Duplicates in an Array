@@ -1,0 +1,18 @@
+找到一个数组中重复的数字，数组中的数字介于1和数组长度之间。数字只出现一次或者两次。
+思路：将值放到其对应下标的位置，如果下标值+1与此时的数组值不同，则该数组值则为重复的值
+Runtime：129ms
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        vector<int> res;
+        for(int i = 0; i < nums.size(); ){
+            if(nums[i] != nums[nums[i]-1]) swap(nums[i], nums[nums[i]-1]);
+            else ++i;
+        }
+        
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] != i+1) res.push_back(nums[i]);
+        }
+        return res;
+    }
+};
