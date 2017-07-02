@@ -1,0 +1,106 @@
+找到子树和中出现最多的数，返回所有出现次数最多的数。
+思路：一个中序进行节点求和，一个层次遍历进行比较出现的次数。
+Runtime：26ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void count(TreeNode* root, int &sum){
+        if(root==NULL) return ;
+        
+        count(root->left, sum);
+       
+        sum += root->val;
+        
+        count(root->right, sum);
+    }
+    vector<int> findFrequentTreeSum(TreeNode* root) {
+        if(root == NULL) return vector<int> {};
+        if(!root->left && !root->right) return vector<int> {root->val};
+        queue<TreeNode* > q;
+        vector<int> ans;
+        map<int, int> m;                    //定义一个map用于记录对应数出现的次数
+        int maxi = 1;     
+        q.push(root);
+        TreeNode* p;
+        while(!q.empty()){
+            p = q.front();
+            int sum = 0;
+            q.pop();
+            count(p, sum);
+            if(!p->left && !p->right) {
+                m[p->val]++;
+                if(m[p->val] == maxi){
+                    ans.push_back(p->val);
+                }
+                if(m[p->val] > maxi){
+                    ans.clear();
+                    ans.push_back(p->val);
+                    maxi = m[p->val];
+                }
+            }
+            else{
+                m[sum]++;
+                if(m[sum] == maxi) ans.push_back(sum);
+                if(m[sum] > maxi) {ans.clear(); ans.push_back(sum);maxi = m[sum];}                
+            }
+
+            if(p->left){
+                q.push(p->left);
+            }
+            if(p->right){
+                q.push(p->right);
+            }
+        }
+        return ans;
+    }
+};
+该方法的不足：对树进行了两次遍历
+改进：只扫描一次树
+Runtime：15ms
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int count(TreeNode* root, unordered_map<int, int> &m, int &maxi){
+        if(root == nullptr) return 0;
+        
+        int sum = root->val;
+        
+        sum += count(root->left, m, maxi);
+        sum += count(root->right, m, maxi);
+        
+        m[sum]++;
+        maxi = max(m[sum], maxi);
+        
+        return sum;
+    }
+    vector<int> findFrequentTreeSum(TreeNode* root) {
+        int maxi = 1;
+       unordered_map<int, int> m;
+        vector<int> vec;
+        count(root, m, maxi);
+        
+        for(auto i: m){
+            if(i.second == maxi){
+                vec.push_back(i.first);
+            }
+        }
+        
+        return vec;
+    }
+};
