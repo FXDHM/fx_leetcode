@@ -1,0 +1,17 @@
+给定一个数组，表示时间，给定一个整数，表示中毒持续时间。计算总共中毒的时间
+思路：主要又中毒时间重复的现象
+Runtime:59ms
+class Solution {
+public:
+    int findPoisonedDuration(vector<int>& timeSeries, int duration) {
+        if(timeSeries.size() == 0) return 0;
+        int sum = duration;
+        int m;
+        for(int i = 1; i != timeSeries.size(); i++){
+            m = timeSeries[i] - timeSeries[i-1];
+            if(m <= duration) sum += m;
+            else sum += duration;
+        }
+        return sum;
+    }
+};
