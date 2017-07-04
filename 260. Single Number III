@@ -1,0 +1,23 @@
+一个数组中只有两个数出现两次，其他数出现一次，找出这两个数
+思路：首先，对所有数进行异或，得出了出现两次的两个数的异或值，因为两个数不相同，所以两个数的异或值至少1位为1，我们把两个数的异或值设置成只有1为是1，其余
+全是0，设这个数是m。设出现两次的数为a，b。则a，b必有一个数与m做&运算的结果为零，这样就可以把a，b分开。
+把两个数的异或值置为只有一个1的方法m &= -m；
+Runtime：16ms
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+         int diff = 0; for (int num : nums) diff ^= num;
+        //int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+        diff &= -diff ;
+        
+        vector<int> vec(2, 0);
+        for(auto i : nums){
+            if((i & diff) == 0){
+                vec[0] ^= i;
+            }
+            else
+                vec[1] ^= i;
+        }
+        return vec;
+    }
+};
