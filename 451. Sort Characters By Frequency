@@ -1,0 +1,27 @@
+以字母出现的频率对字符串进行排序，频率越高，越在前面
+思路：创立一个map记录每一个字母出现的次数，创立一个vector<string>,大小为给定的string的长度+1
+根据字母出现的次数，在对应vector的下标中给string赋值
+最后将vec中的内容赋给一个string，reserve该字符串
+Runtime：32ms
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> m;
+        vector<string> vec(s.size()+1, "");
+        
+        for(char s1 : s) m[s1]++;
+        
+        for(auto i : m){
+            int n = i.second;
+            int c = i.first;
+            vec[n].append(n, c);
+        }
+        string ans;
+        for(auto i : vec){
+            if(i != "")
+                ans += i;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
