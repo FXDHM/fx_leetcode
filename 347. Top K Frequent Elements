@@ -1,0 +1,25 @@
+找到数组中前k个出现次数最频繁的元素。
+思路：建立一个unordered_map，将数组中的元素出现次数记录到map中。建立一个优先级队列，优先级会按照元素的大小进行出队列运算。在这里我们
+定义一个priority_queue<pair<int, int>> pq。将map中的数据插入到pq中；当pq中的元素个数大于map.size()-k时，进行出队列操作，将出队列
+的元素放入到vector中
+Runtime：33ms
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> m;
+        for(auto i : nums){
+            ++m[i];
+        }
+        
+        vector<int> res;
+        priority_queue<pair<int, int>> pq;
+        for(auto i = m.begin(); i != m.end(); ++i){
+            pq.push(make_pair(i->second, i->first));
+            if(pq.size() > (int)m.size() - k){
+                res.push_back(pq.top().second);
+                pq.pop();
+            }
+        }
+        return res;
+    }
+};
