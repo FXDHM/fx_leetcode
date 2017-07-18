@@ -1,0 +1,22 @@
+给定一个数组，返回一个新数组，该数组中每一个元素是元素组中其他元素的乘积。
+思路：创建一个输出数组res，大小为给定数组的大小，设置res[0]=1.给res的其余元素赋值为res[i-1] * nums[i-1].
+     赋值完毕后，设置一个right=1，将res的每个值进行迭代与right相乘，right *= nums[i].
+Runtime: 53 ms
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> vec(nums.size(), 1);
+        auto l = nums.size();
+        for(int i = 1; i < l; ++i){
+            vec[i] = vec[i - 1] * nums[i - 1];
+        }
+        
+        int right = 1;
+        for(int i = l - 1; i >= 0; --i){
+            vec[i] *= right;
+            right *= nums[i];
+        }
+        
+        return vec;
+    }
+};
