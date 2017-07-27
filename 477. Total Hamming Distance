@@ -1,0 +1,19 @@
+统计一个数组中每一对数的Hamming距离的总和
+思路：设数组为nums，统计出每次移位最右边是1的个数n，则total += n * （nums.size() - n）;从0到31依次遍历，求出总和
+Runtime：56ms
+class Solution {
+public:
+    int totalHammingDistance(vector<int>& nums) {
+        int total = 0;
+        int l = nums.size();
+        for(int i = 0; i < 32; ++i){
+            int bitset = 0;
+            for(int j = 0; j < l; ++j){
+                bitset += (nums[j] >> i) & 1;
+            }
+            total += (bitset * (l - bitset));
+        }
+        
+        return total;
+    }
+};
