@@ -1,0 +1,28 @@
+字符串中分数求和，输出的分数也为字符串
+思路：自己还是傻瓜思路，用find函数找到字符串中的数字。学到了一种stringstream定义一个string流的方法。这个方法能够直接读取整数和字符，
+读出后直接计算就好。每次计算要求分子和分母的最大公约数。
+最大公约数求法：辗转相除法，设有两个整数a，b。a % b = r。则a和b的最大公约数和b和r的最大公约数相同，循环直到r==0，则b为两个数的最大公约数
+Runtime：3ms
+class Solution {
+public:
+    int getGSD(int a, int b){
+        if(b == 0) return a;
+        return getGSD(b, a % b);
+    }
+    string fractionAddition(string expression) {
+        stringstream ss(expression);
+        int nu = 0;
+        int deno = 1;
+        int nu1;
+        int deno1;
+        char buff;
+        while(ss >> nu1 >> buff >> deno1){
+            nu = nu1 * deno + nu * deno1;
+            deno = deno * deno1;
+            int g = abs(getGSD(nu, deno));
+            nu /= g;
+            deno /= g;
+        }
+        return to_string(nu) + "/" + to_string(deno);
+    }
+};
