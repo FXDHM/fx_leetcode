@@ -1,0 +1,24 @@
+一个整数可以由很多因子整数相加而得，求出这些因子整数乘积的最大值
+思路：每个整数的最大因子乘积都是由2，3，4组成，整数循环减去3，若值等于4，则直接乘4，否则乘3.一直循环到整数小于3，若整数最后等于二，则最大值乘以2
+Runtime：0ms
+lass Solution {
+public:
+    int integerBreak(int n) {
+        if(n == 2) return 1;
+        if(n == 3) return 2;
+        if(n == 4) return 4;
+        int ans = 1;
+        while(n - 3 >= 0){
+            if(n == 4) {
+                ans *= 4;
+                n -= 3;
+            }
+            else{
+                ans *= 3;
+                n -= 3;
+            }
+        }
+        if(n == 2) ans *= n;
+        return ans;
+    }
+};
