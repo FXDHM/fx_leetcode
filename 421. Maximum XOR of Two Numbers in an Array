@@ -1,0 +1,28 @@
+找一个数组中两个数异或运算结果的最大值
+思路：从最左边开始，按位寻找，a^b =c --> a^c = b, c^b = a。
+class Solution {
+public:
+    int findMaximumXOR(vector<int>& nums) {
+        int t = 0;
+        int maxi = 0;
+        for(int i = 31; i >= 0; --i)
+        {
+            t = (1 << i) | t;       
+            unordered_set<int> s;
+            for(auto a : nums){
+               s.insert(a & t);     //找到最左边的1，从这个1开始向右移，
+            }
+            int tmp = maxi | (1 << i);  //已4位数为例，tmp值可能值为1000， 1100， 1110， 1111；
+            for(auto b : s){
+                if(s.find(tmp ^ b) != s.end())
+                {
+                    maxi = tmp;       //用到上面的规律，如果存在s.find(tmp ^ b), 则说明该tmp能够取到。例如1000可以取到，但是1100不能取到，
+                    break;            //那么下一个的tmp的值为1010
+                }    
+
+            }
+        }
+        return maxi;
+        
+    }
+};
