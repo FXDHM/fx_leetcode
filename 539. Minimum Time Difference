@@ -1,0 +1,30 @@
+找到一个数组中两个时间的最小分钟差；
+思路：先将数组排序，依次算出差值，找到最小分钟，另外要把这个最小值与数组最小值和最大值相差的分钟数进行比较，找到最小值
+Runtime：39ms
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        sort(timePoints.begin(), timePoints.end());
+        int h, m;
+        char d;
+        int hp, mp;
+        char dp;
+        stringstream s1(timePoints[0]);
+        s1 >> hp >> dp >> mp;
+        int mini = 10000;
+        for(int i = 1; i < timePoints.size(); ++i)
+        {
+            stringstream s(timePoints[i]);
+            s >> h >> d >> m;
+            if((h-hp)*60+m-mp < mini) mini = (h-hp)*60+m-mp;
+            hp = h; mp = m; 
+        }
+        
+        stringstream s2(timePoints[0]);
+        s2 >> h >> d >> m;
+        //return m;
+        int t = (hp - h) * 60 + mp - m;
+        if(24 * 60 - t < mini) mini = 24*60-t;
+        return mini;
+    }
+};
