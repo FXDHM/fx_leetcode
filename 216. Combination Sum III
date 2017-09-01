@@ -1,0 +1,28 @@
+给定两个整数k和n，k位（1-9）不同的数相加等于n，求出所有的可能序列；
+思路：回溯法
+Runtime：0ms
+class Solution {
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> ans;
+        vector<int> a;
+        dfs(ans, a,k, 1, n);
+        return ans;
+    }
+    
+    void dfs(vector<vector<int>>& ans, vector<int> a,int k, int start, int n)
+    {
+        if(a.size() == k && n == 0)
+        {
+            ans.push_back(a);
+            return;
+        }
+        if(n <= 0) return;
+        for(int i = start; i <= 9; ++i)
+        {
+            a.push_back(i);
+            dfs(ans, a, k, i+1, n-i);
+            a.pop_back();
+        }
+    }
+};
