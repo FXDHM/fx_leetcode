@@ -1,3 +1,62 @@
 求一个n*n矩阵中，K小的数值。矩阵的行值和列值都是递增的
 方法一：使用堆
 将矩阵中的数组按行放入堆中，此时的堆头元素为最小值。循环出堆，直至第K个元素。
+class Tuple{
+public:
+    Tuple() {};
+    Tuple(int x, int y, int value):x(x), y(y), value(value) { }
+    int x,y;
+    int value;
+};
+class Solution {
+public:
+    struct compare{
+        bool operator()(Tuple &v1, Tuple &v2)
+        {
+            return v1.value > v2.value;
+        }            
+    };
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        priority_queue<Tuple, vector<Tuple>, compare> pq;
+        
+        for(int i = 0; i < matrix.size(); ++i){
+            Tuple p(0, i, matrix[0][i]);
+            pq.push(p);
+        }
+        int c = 0;
+        Tuple p;
+        
+        for(int i = 0; i < k-1; ++i)
+        {
+            p = pq.top();
+            pq.pop();
+            if(p.x == matrix.size()-1) continue;
+            Tuple t(p.x+1, p.y, matrix[p.x+1][p.y]);
+            pq.push(t);
+        }
+        return pq.top().value;
+    }
+};
+
+方法二：二分法
+因为矩形的长和列是递增的，因此我们可以考虑二分法
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n = matrix.size();
+        int lo = matrix[0][0], hi = matrix[n-1][n-1];
+        while(lo < hi)
+        {
+            int mid = lo + (hi-lo)/2;
+            int j = n-1, count = 0;
+            for(int i = 0; i < n; ++i)
+            {
+                while(matrix[i][j] > mid) j--;
+                count += (j+1);
+            }
+            if(count < k) lo = mid+1;
+            else hi = mid;
+        }
+        return lo;
+    }
+};
