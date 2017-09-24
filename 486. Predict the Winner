@@ -1,0 +1,23 @@
+给定一个数组，有两名选手，选手只能从数组的两端选数， 所选数相加较大的人获胜。试判断选手1是否能够获胜
+思路：dp问题。我们选择一个二维数组dp[i][j]表示从序号i到j，表示手1选择和比选手2大多少。先初始化dp[i][i]；接着
+dp[i][j] = max (dp[i+1][j] ).
+class Solution {
+public:
+    bool PredictTheWinner(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> vec;
+        for(int i = 0; i < n; ++i){
+             vector<int> v(n, 0);
+            vec.push_back(v);
+        }
+        for(int i = 0; i < n; ++i) vec[i][i] = nums[i];
+        for(int len = 1; len < n; ++len)
+        {
+            for(int i = 0; i < n-len; i++){
+                int j = i+len;
+                vec[i][j] = max(nums[i] - vec[i+1][j], nums[j] - vec[i][j-1]);
+            }
+        }
+        return (vec[0][n-1] >= 0);
+    }
+};
