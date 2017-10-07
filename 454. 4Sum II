@@ -1,0 +1,24 @@
+给四个vector数组，找到从四个数组中每个数组抽取一个元素使得这四个元素的值为零的组合数
+思路：建立一个unordered_map, 储存A，B中每一对的值，之后遍历C，D的每一个元素对的和，看看map中是否含有其和的相反数
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> m;
+        int count = 0;
+        for(auto a: A){
+            for(auto b: B){
+                ++m[a+b];
+            }
+        }
+        for(auto c: C){
+            for(auto d:D){
+                auto it = m.find(-c-d);
+                if(it != m.end()){
+                    count += it->second;
+                }
+            }
+        }
+        
+        return count;
+    }
+};
