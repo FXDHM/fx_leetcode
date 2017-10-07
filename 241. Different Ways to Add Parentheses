@@ -6,7 +6,7 @@ public:
         vector<int> result;
         //result.push_back(input.size());
         //return result;
-        //if(input.size() == 1) {result.push_back(atoi(input.c_str())); return result;}
+        //if(input.size() == 1) {result.push_back(atoi(input.c_str())); return result;} 不一定size为1
         for(int i = 0; i < input.size(); ++i)
         {
             if(input[i] == '+' || input[i] == '-' || input[i] == '*')
