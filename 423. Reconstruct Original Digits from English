@@ -1,0 +1,33 @@
+在一个字符串中找到所有单词表示的数字，所有字符串恰好能表示其中的数字，没有多余字符串
+思路：找到每一个代表数字的单词中单独含有的字母， 若没有则减掉其他含有该字母单词出现的次数得到该单词出现的次数
+class Solution {
+public:
+    string originalDigits(string s) {
+        map<int, int> m;
+        for(int i = 0; i < s.size(); ++i)
+        {
+            if(s[i] == 'z') ++m[0];
+            if(s[i] == 'n') ++m[1];
+            if(s[i] == 'w') ++m[2];
+            if(s[i] == 'r') ++m[3];
+            if(s[i] == 'u') ++m[4];
+            if(s[i] == 'v') ++m[5];
+            if(s[i] == 'x') ++m[6];
+            if(s[i] == 's') ++m[7];
+            if(s[i] == 'g') ++m[8];
+            if(s[i] == 'i') ++m[9];
+        }
+        m[3] = m[3] - m[4] - m[0];
+        m[7] -= m[6];
+        m[5] -= m[7];
+        m[9] = m[9] - m[5] - m[6] - m[8];
+        m[1] = m[1] - m[7] - 2*m[9];
+        string ans;
+        for(int i = 0; i < 10; ++i)
+        {
+            for(int j = 0; j < m[i]; ++j)
+                ans += to_string(i);
+        }
+        return ans;
+    }
+};
