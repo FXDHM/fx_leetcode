@@ -1,0 +1,72 @@
+给定一个数组，数组中的每个数代表bar的高低，计算bar构成的形状中最多能存储多少水
+思路1：暴力法，遍历每一个点，在每一个点分别遍历左右两边找到左右两边的最大值，再从中找出左右最大值的最小值。用最小值减去当前值即为该点
+的储水量
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size() <= 2) return 0;
+        
+        int ans = 0;
+        
+        for(int i = 0; i < height.size(); ++i)
+        {
+            int leftmax = height[i];
+            int rightmax = height[i];
+            
+            for(int j = 0; j < i; ++j)
+                if(height[j] > leftmax)
+                    leftmax = height[j];
+            
+            for(int j = height.size() - 1; j > i; --j)
+                if(height[j] > rightmax)
+                    rightmax = height[j];
+            
+            int maxi = min(leftmax, rightmax);
+            
+            ans += maxi - height[i];
+        }
+        
+        return ans;
+    }; 
+};
+
+思路2：动态规划，基本原理和思路1相同。先从左边扫描，得出到index=i时，左边最大的数。再从右边扫描，得出到index=i时右边最大的数。再求当
+index=i时，min（左边最大数，右边最大数）。
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size() == 0) return 0;
+        
+        vector<int> leftmax(height.size(), 0);
+        vector<int> rightmax(height.size(), 0);
+        
+        leftmax[0] = height[0];
+        rightmax[height.size() - 1] = height[height.size() - 1];
+        
+        for(int i = 1; i < height.size(); ++i)
+        {
+            if(height[i] > leftmax[i-1])
+                leftmax[i] = height[i];
+            else
+                leftmax[i] = leftmax[i-1];
+        }
+        
+        for(int i = height.size() - 2; i >= 0; --i)
+        {
+            if(height[i] > rightmax[i+1])
+                rightmax[i] = height[i];
+            else
+                rightmax[i] = rightmax[i+1];
+        }
+        
+        int ans = 0;
+        for(int i = 0; i < height.size(); ++i)
+        {
+            int tmp = min(leftmax[i], rightmax[i]);
+            if(tmp - height[i] > 0)
+                ans += tmp - height[i];
+        }
+        
+        return ans;
+    }
+};
