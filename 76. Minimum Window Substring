@@ -1,0 +1,61 @@
+给定两个字符串s，t。找出s包含t所有字符的最短字串
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        vector<int> m(128, 0);
+        
+        for(auto i : t)
+            m[i]++;
+        
+        int begin = 0, end = 0;
+        int head;
+        
+        int count = t.size();
+        int lmin = INT_MAX;
+        
+        while(end < s.size())
+        {
+            if(m[s[end++]]-- > 0)
+                count--;
+            
+            while(count == 0)
+            {
+                if(end - begin < lmin)
+                {
+                    lmin = end - begin;
+                    head = begin;
+                }
+                
+                if(m[s[begin++]]++ == 0)
+                    count++;
+            }
+        }
+        
+        return lmin == INT_MAX ? "" : s.substr(head, lmin);
+    }
+};
+
+解决字串问题的一般格式
+  vector<int> m(128, 0);
+  for(auto i : t)
+    m[i]++;
+    
+  int begin = 0, end = 0;
+  int head;
+  
+  int count = t.size();
+  int lmin = INT_MAX;
+  
+  while(end < s.size())
+  {
+      if(m[s[end++]]-- > 0)
+         执行count操作
+      
+      while(count == 0)
+      {
+        满足的条件
+        if(m[s[begin++]]++ == 0)
+        modify count here
+      }
+  }
