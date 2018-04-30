@@ -60,3 +60,7 @@ public:
         return lo;
     }
 };
+
+
+priority_queue<int, vector<int>, greater<int> > q;  // 小顶堆  
+priority_queue<int, vector<int>, less<int> > q;     // 大顶堆  
