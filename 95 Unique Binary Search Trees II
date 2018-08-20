@@ -1,0 +1,33 @@
+递归的思路，二叉搜索树可以按照按照中序遍历是一个有序数组。因此可以一半一半的构建出所有可能
+    vector<TreeNode*> generateTrees(int n) {
+        return help(1, n);
+    }
+
+    vector<TreeNode*> help(int start, int end) {
+    	vector<TreeNode*> vec;
+    	if(start > end) {
+    		vec.push_back(null);
+    		return vec;
+    	}
+    	if(start == end) {
+    		TreeNode* tmp = new TreeNode(start);
+    		vec.push_back(tmp);
+    		return vec;
+    	}
+
+    	for(int i = start; i < end; ++i) {
+    		vector<TreeNode*> lnode = help(start, i-1);
+    		vector<TreeNode*> rnode = help(i+1, end);
+
+    		for(auto l : lnode) {
+    			for(auto r : rnode) {
+    				TreeNode* root = new TreeNode(i);
+    				root->left = l;
+    				root->right = r;
+    				vec.push_back(root);
+    			}
+    		}
+    	}
+
+    	return vec;
+    }
